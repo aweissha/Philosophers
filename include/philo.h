@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:25:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/06 17:18:50 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:28:49 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ typedef struct s_data
 	int				*forks;
 	pthread_mutex_t	*fork_mutexes;
 	pthread_mutex_t	*mutex_print;
+	pthread_t		termination_checker;
+	int				someone_dead;
+	int				someone_full;
 }	t_data;
 
 void	ft_error(char *message, int code);
@@ -55,13 +58,13 @@ void	ft_free(t_data *data);
 void	ft_free_error(char *message, int code, t_data *data);
 void	ft_join_and_free(t_data *data);
 long	ft_time_ms(void);
-void	ft_eat(t_data *data, t_philo *philo);
-void	take_forks_up(t_philo *philo);
-void	put_forks_down(t_philo *philo);
-void	ft_think(t_data *data, t_philo *philo);
-void	ft_sleep(t_data *data, t_philo *philo);
+int		ft_eat(t_data *data, t_philo *philo);
+int		take_forks_up(t_data *data, t_philo *philo);
+int		put_forks_down(t_data *data, t_philo *philo);
+int		ft_think(t_data *data, t_philo *philo);
+int		ft_sleep(t_data *data, t_philo *philo);
 void	*ft_philo(void *arg);
-void	ft_create_philos(t_data *data);
+void	ft_create_threads(t_data *data);
 t_data	*ft_init_data(int argc, char **argv);
 
 #endif

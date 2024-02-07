@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:27:08 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/06 17:59:24 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:08:54 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ int	main(int argc, char **argv)
 
 
 	data = ft_init_data(argc, argv);
-	ft_create_philos(data);
+	ft_create_threads(data);
 
-	sleep(10);
+	// sleep(10);
+
+	
 	ft_join_and_free(data);
 }
 
 // Todo:
+// implement death checker...thread, that continuously check if a philosopher is supposed to die
 // implement argument checks (therefore check the eval sheet)

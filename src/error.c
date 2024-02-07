@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:04:37 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/06 17:44:23 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:39:10 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_join_and_free(t_data *data)
 	i = 0;
 	while (i < data->number_philos)
 	{
-		if (pthread_join(data->philos[i].philo, NULL) != 0)
+		if (pthread_join(((data->philos)[i]).philo, NULL) != 0)
 			ft_free_error("error joining of thread\n", EXIT_FAILURE, data);
 		i++;
 	}
