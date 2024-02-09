@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:04:37 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/07 12:39:10 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:16:55 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	ft_free(t_data *data)
 		free(data->philos);
 	if (data->forks != NULL)
 		free(data->forks);
-	if (data->mutex_print != NULL)
+	if (data->eating_mutex != NULL)
 	{
-		pthread_mutex_destroy(data->mutex_print);
-		free(data->mutex_print);
+		pthread_mutex_destroy(data->eating_mutex);
+		free(data->eating_mutex);
 	}
 	if (data->fork_mutexes != NULL)
 	{
@@ -61,5 +61,7 @@ void	ft_join_and_free(t_data *data)
 			ft_free_error("error joining of thread\n", EXIT_FAILURE, data);
 		i++;
 	}
+	if (pthread_join((data->termination_checker), NULL) != 0)
+		ft_free_error("error joining of termination_thread\n", EXIT_FAILURE, data);
 	ft_free(data);
 }

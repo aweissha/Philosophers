@@ -19,7 +19,7 @@ SRCS = 		$(SRC_DIR)philo.c \
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lpthread
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:43:18 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/07 17:03:54 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:09:43 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,36 @@ void	*ft_termination_checker(void *arg)
 {
 	t_data	*data;
 	int		i;
+	long	last_meal_time;
+	int		number_eaten;
 
 	data = (t_data *)arg;
 	while (1)
 	{
-		// printf("hello\n");
-		// printf("someone dead: %d\n", data->someone_dead);
-		// printf("someone full: %d\n", data->someone_full);
-		
-		// usleep(10000);
-		// data->someone_dead = 1;
-		// printf("current time: %ld\n", ft_time_ms());
-		// printf("last meal time: %ld\n", ((data->philos)[5]).last_meal_time);
-		// printf("time to die: %ld\n", data->time_to_die);
-		// printf("time diff: %ld\n", ft_time_ms() - ((data->philos)[5]).last_meal_time);
 		i = 0;
-		// usleep(data->time_to_die * 1000);
+		pthread_mutex_lock(data->eating_mutex);
 		while (i < data->number_philos)
 		{
-			printf("diff: %ld\n", (ft_time_ms() - ((data->philos)[i]).last_meal_time));
-			printf("number_eaten: %d\n", ((data->philos)[i]).number_eaten);
-			if ((ft_time_ms() - ((data->philos)[i]).last_meal_time) > (data->time_to_die))
+			last_meal_time = ((data->philos)[i]).last_meal_time;
+			if ((ft_time_ms() - last_meal_time) > (data->time_to_die))
 			{
 				data->someone_dead = 1;
 				printf("Philosopher %d died of starvation\n", ((data->philos)[i]).philo_number);
+				pthread_mutex_unlock(data->eating_mutex);	
 				return (NULL);
 			}
-			if (((data->philos)[i]).number_eaten >= data->number_eat)
+			number_eaten = ((data->philos)[i]).number_eaten;
+			if (number_eaten >= data->number_eat)
 			{
 				data->someone_full = 1;
 				printf("Philosopher %d has eaten enough\n", ((data->philos)[i]).philo_number);
+				pthread_mutex_unlock(data->eating_mutex);
 				return (NULL);
 			}
 			i++;
 		}
+		pthread_mutex_unlock(data->eating_mutex);
+		usleep(100);
 	}
 	return (arg);
 }
@@ -66,10 +62,10 @@ void	ft_create_threads(t_data *data)
 	{
 		data->philos[i].philo_index = i;
 		data->philos[i].philo_number = i + 1;
-		data->philos[i].number_eaten = 0;
-		data->philos[i].data = data;
 		data->philos[i].right_fork_mutex = &((data->fork_mutexes)[i]);
 		data->philos[i].right_fork = &((data->forks)[i]);
+		data->philos[i].number_eaten = 0;
+		data->philos[i].data = data;
 		if (i > 0)
 		{
 			data->philos[i].left_fork_mutex = &((data->fork_mutexes)[i - 1]);
@@ -82,6 +78,7 @@ void	ft_create_threads(t_data *data)
 		}
 		i++;
 	}
+	data->start_time = ft_time_ms();
 	i = 0;
 	while (i < data->number_philos)
 	{
@@ -111,18 +108,20 @@ t_data	*ft_init_data(int argc, char **argv)
 	data->philos = NULL;
 	data->forks = NULL;
 	data->fork_mutexes = NULL;
-	data->mutex_print = NULL;
-	data->mutex_print = malloc(sizeof(pthread_mutex_t));
-	if (data->mutex_print == NULL)
-		ft_free_error("memory allocation for mutex_print failed", EXIT_FAILURE, data);
+	data->eating_mutex = NULL;
+	data->someone_dead = 0;
+	data->someone_full = 0;
+	data->eating_mutex = malloc(sizeof(pthread_mutex_t));
+	if (data->eating_mutex == NULL)
+		ft_free_error("memory allocation for last_meal_mutex failed", EXIT_FAILURE, data);
+	if (pthread_mutex_init(data->eating_mutex, NULL) != 0)
+		ft_free_error("last_meal_mutex initialization failed\n", EXIT_FAILURE, data);
 	data->fork_mutexes = malloc(sizeof(pthread_mutex_t) * data->number_philos);
 	if (data->fork_mutexes == NULL)
 		ft_free_error("memory allocation for fork_mutexes failed", EXIT_FAILURE, data);
 	data->forks = malloc(sizeof(int) * data->number_philos);
 	if (data->forks == NULL)
 		ft_free_error("memory allocation for forks array failed", EXIT_FAILURE, data);
-	if (pthread_mutex_init(data->mutex_print, NULL) != 0)
-		ft_free_error("mutex_print initialization failed\n", EXIT_FAILURE, data);
 	i = 0;
 	while (i < data->number_philos)
 	{
@@ -136,8 +135,6 @@ t_data	*ft_init_data(int argc, char **argv)
 		data->forks[i] = 1;
 		i++;
 	}
-	data->start_time = ft_time_ms();
-	data->someone_dead = 0;
-	data->someone_full = 0;
+	data->start_time = 0;
 	return (data);
 }

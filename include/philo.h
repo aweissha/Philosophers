@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:25:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/07 17:28:49 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:51:06 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_philo
 	int				*left_fork;
 	int				number_eaten;
 	long			last_meal_time;
+	int				waited;
 	t_data			*data;
 }	t_philo;
 
@@ -47,8 +48,8 @@ typedef struct s_data
 	t_philo			*philos;
 	int				*forks;
 	pthread_mutex_t	*fork_mutexes;
-	pthread_mutex_t	*mutex_print;
 	pthread_t		termination_checker;
+	pthread_mutex_t	*eating_mutex;
 	int				someone_dead;
 	int				someone_full;
 }	t_data;
@@ -60,7 +61,7 @@ void	ft_join_and_free(t_data *data);
 long	ft_time_ms(void);
 int		ft_eat(t_data *data, t_philo *philo);
 int		take_forks_up(t_data *data, t_philo *philo);
-int		put_forks_down(t_data *data, t_philo *philo);
+void	put_forks_down(t_philo *philo);
 int		ft_think(t_data *data, t_philo *philo);
 int		ft_sleep(t_data *data, t_philo *philo);
 void	*ft_philo(void *arg);
