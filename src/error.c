@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:04:37 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/09 17:16:55 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/10 13:08:11 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ void	ft_free(t_data *data)
 	i = 0;
 	if (data->philos != NULL)
 		free(data->philos);
-	if (data->forks != NULL)
-		free(data->forks);
-	if (data->eating_mutex != NULL)
-	{
-		pthread_mutex_destroy(data->eating_mutex);
-		free(data->eating_mutex);
-	}
 	if (data->fork_mutexes != NULL)
 	{
 		while (i < data->number_philos)
@@ -41,6 +34,8 @@ void	ft_free(t_data *data)
 		}
 		free(data->fork_mutexes);
 	}
+	pthread_mutex_destroy(&(data->eating_mutex));
+	free(data->philo_threads);
 	free(data);
 }
 
@@ -57,7 +52,7 @@ void	ft_join_and_free(t_data *data)
 	i = 0;
 	while (i < data->number_philos)
 	{
-		if (pthread_join(((data->philos)[i]).philo, NULL) != 0)
+		if (pthread_join(((data->philo_threads)[i]), NULL) != 0)
 			ft_free_error("error joining of thread\n", EXIT_FAILURE, data);
 		i++;
 	}

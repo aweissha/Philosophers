@@ -3,7 +3,7 @@ NAME = philo
 LIBFT = libft/libft.a
 SRC_DIR = src/
 
-CC = gcc
+CC = gcc -g
 CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 
@@ -19,7 +19,7 @@ SRCS = 		$(SRC_DIR)philo.c \
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lpthread
+	$(CC) -pthread $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 all: $(NAME)
 
