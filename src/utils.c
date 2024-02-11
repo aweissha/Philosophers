@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:54:05 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/10 15:08:25 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/11 14:15:33 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ long	ft_time_ms(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) != 0)
-		ft_error("gettimeofday failed", EXIT_FAILURE);
+		return (1);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

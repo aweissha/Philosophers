@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:27:08 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/10 12:31:13 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:59:44 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_data	data;
 
-	// check_input(argc, argv);
-	data = ft_init_data(argc, argv);
-	ft_create_threads(data);
-
-	// sleep(10);
-
-	
-	ft_join_and_free(data);
+	if (validate_input(argc, argv) == 1)
+	{
+		printf("Error: Input is not valid\n");
+		return (1);	
+	}
+	if (ft_init_data(&data, argc, argv) == 1)
+		return (1);
+	ft_create_threads(&data);
+	ft_join_and_free(&data);
 }
 
 // Todo:
-// implement argument checks (therefore check the eval sheet)
-
-// make improved sleep function
+//  clean up code
 //  handle case of only 1 philo
+// check for memory leaks
+// Norminette

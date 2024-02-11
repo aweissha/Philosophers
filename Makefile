@@ -14,6 +14,7 @@ SRCS = 		$(SRC_DIR)philo.c \
 			$(SRC_DIR)init.c \
 			$(SRC_DIR)eat_utils.c \
 			$(SRC_DIR)action.c \
+			$(SRC_DIR)input.c \
 
 
 OBJS = $(SRCS:.c=.o)

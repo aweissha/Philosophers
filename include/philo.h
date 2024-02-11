@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:25:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/10 15:10:55 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/11 14:18:46 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,17 @@ typedef struct s_data
 	t_philo			*philos;
 	pthread_mutex_t	*fork_mutexes;
 	pthread_mutex_t	eating_mutex;
+	pthread_mutex_t	print_mutex;
 	pthread_t		termination_checker;
 	int				someone_dead;
 	int				someone_full;
 }	t_data;
 
-void	ft_error(char *message, int code);
+int		validate_input(int argc, char **argv);
+int		check_range(int argc, char **argv);
+int		only_digits(int argc, char **argv);
 void	ft_free(t_data *data);
-void	ft_free_error(char *message, int code, t_data *data);
-void	ft_join_and_free(t_data *data);
+int		ft_join_and_free(t_data *data);
 long	ft_time_ms(void);
 int		ft_eat(t_data *data, t_philo *philo);
 int		take_forks_up(t_data *data, t_philo *philo);
@@ -62,7 +64,7 @@ int		ft_think(t_data *data, t_philo *philo);
 int		ft_sleep(t_data *data, t_philo *philo);
 void	ft_sleep_ms(long duration);
 void	*ft_philo(void *arg);
-void	ft_create_threads(t_data *data);
-t_data	*ft_init_data(int argc, char **argv);
+int		ft_create_threads(t_data *data);
+int		ft_init_data(t_data *data, int argc, char **argv);
 
 #endif
