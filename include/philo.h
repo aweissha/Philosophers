@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:25:00 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/13 16:14:27 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:49:39 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		only_digits(int argc, char **argv);
 
 // error.c: memory and error handling
 void	ft_free(t_data *data);
-int		ft_join_and_free(t_data *data);
+int		join_and_free(t_data *data);
 
 // utils.c: utils
 long	ft_time_ms(void);
@@ -67,7 +67,7 @@ long	ft_time_ms(void);
 // philosophers actions
 int		ft_eat(t_data *data, t_philo *philo);
 int		take_forks_up(t_data *data, t_philo *philo);
-void	put_forks_down(t_philo *philo);
+int		put_forks_down(t_philo *philo);
 int		ft_think(t_data *data, t_philo *philo);
 int		ft_sleep(t_data *data, t_philo *philo);
 void	ft_sleep_ms(long duration);

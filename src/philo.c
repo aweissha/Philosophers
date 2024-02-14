@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 11:27:08 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/13 16:02:43 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:56:02 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,5 @@ int	main(int argc, char **argv)
 	if (init_data(&data, argc, argv) == 1)
 		return (1);
 	create_threads(&data);
-	ft_join_and_free(&data);
+	join_and_free(&data);
 }
-
-// Todo:
-// check for memory leaks
-// Norminette

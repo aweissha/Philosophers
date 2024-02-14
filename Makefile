@@ -3,7 +3,7 @@ NAME = philo
 LIBFT = libft/libft.a
 SRC_DIR = src/
 
-CC = gcc -g
+CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 

@@ -6,7 +6,7 @@
 /*   By: aweissha <aweissha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:04:37 by aweissha          #+#    #+#             */
-/*   Updated: 2024/02/13 16:15:59 by aweissha         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:32:38 by aweissha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_free(t_data *data)
 	pthread_mutex_destroy(&(data->termination_mutex));
 }
 
-int	ft_join_and_free(t_data *data)
+int	join_and_free(t_data *data)
 {
 	int	i;
 
